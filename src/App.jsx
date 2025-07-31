@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Search from "./components/Search.jsx";
-import jikanjs from "@mateoaranda/jikanjs";
 import Spinner from "./components/Spinner.jsx";
 import AnimeCard from "./components/AnimeCard.jsx";
+import {useDebounce} from 'react-use'
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
@@ -24,13 +24,18 @@ const App = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const [debounceSearchTerm, setDebounceSearchTerm] = useState('');
 
-    const fetchShows = async () => {
+    useDebounce(() => setDebounceSearchTerm(searchTerm), 500, [searchTerm]);
+
+
+    const fetchShows = async (query = '') => {
         setIsLoading(true);
         setErrorMessage('');
 
         try{
-            const endpoint = `${TMDB_BASE_URL}/discover/tv?with_genres=16`;
+            const endpoint = query ?
+                `${TMDB_BASE_URL}/search/tv?query=${encodeURIComponent(query)}` : `${TMDB_BASE_URL}/discover/tv?with_genres=16`;
             const response = await fetch(endpoint, TMDB_API_OPTIONS)
 
             if(!response.ok){
@@ -39,13 +44,19 @@ const App = () => {
 
             const data = await response.json();
 
+            let results = data.results;
+
+            if (searchTerm) {
+                results = results.filter((show) => show.genre_ids?.includes(16));
+            }
+
             if (data.response == 'False'){
                 setErrorMessage(data.error || 'Failed to fetch shows');
                 setShowList([]);
                 return
             }
 
-            setShowList(data.results ? data.results : []);
+            setShowList(data.results ? results : []);
 
             console.log(data);
 
@@ -60,8 +71,8 @@ const App = () => {
     }
 
     useEffect(() => {
-        fetchShows();
-    }, [])
+        fetchShows(debounceSearchTerm);
+    }, [debounceSearchTerm])
 
 
     return (
