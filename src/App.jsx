@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Search from "./components/Search.jsx";
 import jikanjs from "@mateoaranda/jikanjs";
+import Spinner from "./components/Spinner.jsx";
+import AnimeCard from "./components/AnimeCard.jsx";
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
@@ -70,13 +72,15 @@ const App = () => {
                 <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
                 <section className={"all-movies"}>
-                    <h2>All shows</h2>
+                    <h2 className="mt-[20px]">All shows</h2>
                     {isLoading ? (
-                        <p className={'text-white'}>Loading...</p>
+                        <Spinner className="align-middle"></Spinner>
                     ): errorMessage ? (<p className= 'text-red-500'>{errorMessage}</p>):
                         (<ul>
                             {showList.map((show) => (
-                                <p key={show.id} className='text-white'>{show.name}</p>
+                                <AnimeCard key={show.id} show={show}>
+
+                                </AnimeCard>
                             ))}
                         </ul>)
                     }
