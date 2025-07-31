@@ -83,7 +83,7 @@ const App = () => {
             <div className="pattern" />
             <div className="wrapper">
 
-                <img src="../public/logo.png" className="logo" align="center" />
+                <img src="/logo.png" className="logo" align="center" />
                 <h1>Search Animations</h1>
 
                 <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
