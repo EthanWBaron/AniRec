@@ -1,12 +1,28 @@
-# React + Vite
+# AniRec
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AniRec is a lightweight React application built with Vite that allows users to search for animated movies and TV shows using the TMDB (The Movie Database) API. It features a debounced search input for optimized API calls and provides random anime suggestions at the click of a button.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Search Animation Movies:** Quickly search for animated movies and series via the TMDB API.
+- **Debounced Search:** Prevents excessive API calls by delaying the search request until the user stops typing.
+- **Random Anime Suggestions:** Get random anime recommendations with a single click.
+- **Responsive UI:** Clean and user-friendly interface built with React components.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Demo
+
+https://ani-rec-nine.vercel.app/
+
+---
+
+## Technologies Used
+
+- React
+- Vite
+- TMDB API
+- React hooks (`useState`, `useEffect`)
+- Debouncing with `react-use` 
