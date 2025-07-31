@@ -3,6 +3,7 @@ import Search from "./components/Search.jsx";
 import Spinner from "./components/Spinner.jsx";
 import AnimeCard from "./components/AnimeCard.jsx";
 import {useDebounce} from 'react-use'
+import AnimeModal from "./components/AnimeModal.jsx";
 
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const TMDB_BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
@@ -17,6 +18,8 @@ const TMDB_API_OPTIONS = {
 
 const App = () => {
     const [searchTerm, setSearchTerm] = useState('');
+
+    const [selectedShow, setSelectedShow] = useState(null);
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -80,6 +83,9 @@ const App = () => {
             <div className="pattern" />
             <div className="wrapper">
 
+                <img src="../public/logo.png" className="logo" align="center" />
+                <h1>Search Animations</h1>
+
                 <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
                 <section className={"all-movies"}>
@@ -89,7 +95,8 @@ const App = () => {
                     ): errorMessage ? (<p className= 'text-red-500'>{errorMessage}</p>):
                         (<ul>
                             {showList.map((show) => (
-                                <AnimeCard key={show.id} show={show}>
+                                <AnimeCard key={show.id} show={show}
+                                           onClick={() => setSelectedShow(show)}>
 
                                 </AnimeCard>
                             ))}
@@ -99,6 +106,13 @@ const App = () => {
 
             </div>
 
+            {selectedShow && (
+                <AnimeModal
+                    open={!!selectedShow}
+                    show={selectedShow}
+                    onClose={() => setSelectedShow(null)}
+                />
+            )}
         </main>
     )
 }
