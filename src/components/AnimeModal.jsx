@@ -20,7 +20,7 @@ const AnimeModal = ({ open, onClose, show }) => {
                 </button>
 
                 <img
-                    src={show.poster_path ? `https://image.tmdb.org/t/p/w500/${show.poster_path}` : '/no-movie.png'}
+                    src={show.poster_path ? `https://image.tmdb.org/t/p/w500/${show.poster_path}` : '/no-movie.webp'}
                     alt={show.name}
                     className="w-60 h-100 rounded-md mb-4 mx-auto"
                 />
